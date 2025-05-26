@@ -23,12 +23,12 @@ public class JetstreamClient {
     @OnOpen
     public void onOpen(Session session) {
         this.session = session;
-        System.out.println("✅ Connected to Jetstream");
+        logger.info("✅ Connected to Jetstream");
     }
 
     @OnMessage
     public void onMessage(String message) {
-        System.out.println("🔔 Received message: " + message);
+        logger.info("🔔 Received message: " + message);
         if (messageConsumer != null) {
             messageConsumer.accept(message);
         }
@@ -44,7 +44,7 @@ public class JetstreamClient {
 
     @OnError
     public void onError(Session session, Throwable throwable) {
-        System.err.println("WebSocket error: " + throwable.getMessage());
+        logger.error("WebSocket error: " + throwable.getMessage());
         if (!manuallyClosed) {
             tryReconnect();
         }
